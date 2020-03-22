@@ -34,11 +34,28 @@ const MORSE_TABLE = {
     '--...':  '7',
     '---..':  '8',
     '----.':  '9',
-    '-----':  '0',
+    '-----': '0',
 };
 
 function decode(expr) {
-    // write your solution here
+    const encoded = {
+        '10': '.',
+        '11': '-',
+        '00': '',
+        '**********':''
+    }
+    let code = expr.split(/(\d{10})/g).filter(a => a != "");
+    let words = [];
+    
+    for (let i = 0; i < code.length; i++) {
+        let arr = code[i].split(/(\d{2})/g).filter(a => a != "");
+        let letters=[];
+        for (j = 0; j < arr.length; j++) { 
+            letters.push(encoded[arr[j]]);
+        }
+        words[i] = letters.join("") == '' ? " ": MORSE_TABLE[letters.join("")];
+    }
+    return words.join("");
 }
 
 module.exports = {
